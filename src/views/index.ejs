@@ -1,0 +1,166 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<style>
+    /* Configurações de Cores e Fontes */
+:root {
+    --gold: #C5A059;
+    --gold-hover: #e2ba6d;
+    --dark-bg: #0D0D0D;
+    --card-bg: #1A1A1A;
+}
+
+/* Efeito na Nav */
+.navbar-nav .nav-link {
+    transition: color 0.3s ease;
+    position: relative;
+    color: white !important;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--gold);
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--gold) !important;
+}
+
+/* Efeito nos Cards */
+.custom-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease !important;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.custom-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 25px rgba(197, 160, 89, 0.2);
+    border-color: var(--gold) !important;
+}
+
+/* Efeito de Zoom na Imagem do Card */
+.custom-card .card-img-top {
+    transition: transform 0.5s ease;
+}
+
+.custom-card:hover .card-img-top {
+    transform: scale(1.1);
+}
+
+/* Botão de Agendamento */
+.btn-agendar {
+    background-color: var(--gold);
+    color: #000;
+    font-weight: bold;
+    border-radius: 0;
+    padding: 10px 30px;
+    margin-top: 20px;
+    transition: all 0.3s ease !important;
+}
+
+.btn-agendar:hover {
+    background-color: var(--gold-hover) !important;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px rgba(197, 160, 89, 0.4);
+}
+
+</style>
+
+<main style="background-color: #0D0D0D; min-height: 100vh; padding-bottom: 50px;">
+    <div class="principal-content" style="position: relative; width: 100%; height: 75vh; overflow: hidden;">
+        <img src="/assets/interiorBarbearia.png" alt="Interior da Barbearia" 
+             style="width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.7);">
+        
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%;">
+            <h1 style="color: #C5A059; font-family: 'Montserrat', sans-serif; font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">JOHNNY BARBER SHOP</h1>
+            <p style="color: white; font-size: 1.2rem;">Onde o clássico encontra a excelência.</p>
+            <a href="/agendamento" class="btn btn-agendar" style="background-color: #C5A059; color: #000; font-weight: bold; border-radius: 0; padding: 10px 30px; margin-top: 20px;">AGENDAR HORÁRIO</a>
+        </div>
+
+        <div class="golden-border" style="position: absolute; bottom: 0; width: 100%; border-bottom: 4px solid #C5A059; box-shadow: 0px -10px 20px rgba(0,0,0,0.5);"></div>    
+    </div>
+
+    <!-- Seção de Serviços -->
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h2 id="servicos" style="color: #C5A059; font-family: 'Montserrat', sans-serif; text-transform: uppercase;">Nossos Serviços</h2>
+            <div style="width: 60px; height: 3px; background: #C5A059; margin: 10px auto;"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 custom-card" style="background-color: #1A1A1A; border: 1px solid #333;">
+                    <img src="/assets/trancasCorte.jpg" class="card-img-top" alt="Cortes" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-white">Estilo Moderno</h5>
+                        <p class="card-text text-white small">Tendências atuais com acabamento impecável.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 custom-card" style="background-color: #1A1A1A; border: 1px solid #333;">
+                    <img src="/assets/corteClassico.jpg" class="card-img-top" alt="Cortes" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-white">Cortes Clássicos</h5>
+                        <p class="card-text text-white small">A tradição da barbearia old school no seu visual.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 custom-card" style="background-color: #1A1A1A; border: 1px solid #333;">
+                    <img src="/assets/barba.png" class="card-img-top" alt="Barba" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-white">Barboterapia</h5>
+                        <p class="card-text text-white small">Cuidado completo com toalha quente e navalha.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 custom-card" style="background-color: #1A1A1A; border: 1px solid #333;">
+                    <img src="/assets/pigmentacao.png" class="card-img-top" alt="Pigmentação" style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-white">Pigmentação</h5>
+                        <p class="card-text text-white small">Definição e preenchimento para barba e cabelo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sobre nós -->
+     <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h2 id="sobre" style="color: #C5A059; font-family: 'Montserrat', sans-serif; text-transform: uppercase;">Quem somos?</h2>
+                <div style="width: 60px; height: 3px; background: #C5A059; margin: 10px auto;"></div>
+                <!-- Flexbox layout a esquerda -->
+                <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                    <div class="img">
+                        <img src="/assets/logoStyle.png" alt="Equipe da Barbearia" 
+                            class="object-cover object-left-bottom" 
+                            style="width: 100%; max-width: 400px; border: 3px solid #C5A059; box-shadow: 0px 0px 15px rgba(197, 160, 89, 0.5);">
+                    </div>
+                        <div class="col-md-8" style="flex: 1; min-width: 300px;">
+                            <p style="color: white; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                                Na Johnny Barber Shop, combinamos tradição e modernidade para oferecer uma experiência única de cuidado masculino. Nossa equipe de barbeiros experientes é dedicada a proporcionar cortes de cabelo e barba impecáveis, utilizando técnicas clássicas e produtos de alta qualidade. Mais do que um simples corte, oferecemos um ambiente acolhedor onde cada cliente é tratado com atenção personalizada. Venha nos visitar e descubra por que somos a escolha preferida para homens que valorizam estilo e excelência.
+                            </p>
+                        </div>
+                </div>
+        </div>
+    </div>
+
+</main>
+
+<%- include('includes/footer') %>

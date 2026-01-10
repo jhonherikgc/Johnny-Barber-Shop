@@ -4,8 +4,10 @@ const homeController = require('./src/controllers/homeController');
 const contatoController = require('./src/controllers/contatoController');
 const errorController = require('./src/controllers/errorController');
 const loginController = require('./src/controllers/loginController');
-const agendamentoController = require('.src/controllers/agendamentoController')
+const agendamentoController = require('./src/controllers/agendarController');
 
+// Rotas de agendamento
+route.get('/agendamento', agendamentoController.agendarHorario);
 
 // Rota de login
 route.get('/login', loginController.loginPage);

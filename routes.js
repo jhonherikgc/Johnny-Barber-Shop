@@ -19,6 +19,9 @@ route.get('/', homeController.paginaInicial);
 // Rotas de contato
 route.get('/contato', contatoController.paginaInicial);
 
+// Rotas de agendamento
+route.get('/agendamento', agendamentoController.agendamentoPage)
+
 // Rota de erro 404
 route.get('/404', errorController.paginaErro);
 

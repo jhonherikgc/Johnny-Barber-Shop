@@ -1,75 +1,64 @@
 <%- include('../includes/head') %>
 
-<section style="background-color: #0a0a0a; min-height: 100vh; display: flex; align-items: center; padding: 40px 0;">
-  <div class="container h-100">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+
+<section class="register-section">
+  <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
-        <div class="card" style="border-radius: 1rem; background-color: #1a1a1a; border: 1px solid #C5A059;">
+        <div class="card main-card">
           <div class="row g-0">
             <div class="col-md-6 col-lg-5 d-none d-md-block">
-              <img src="/assets/loginPage.png"
-                alt="login form" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; border-radius: 1rem 0 0 1rem; opacity: 0.8;" />
+              <img src="/assets/loginPage.png" alt="Johnny Barber Shop" class="img-fluid side-img" />
             </div>
+
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-white">
                 
-                <form action="/register" method="POST">
+                <form action="/register" method="POST" id="registerForm">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  
+                  <input type="hidden" name="full_phone" id="full_phone" />
 
-                  <div class="d-flex align-items-center mb-3 pb-1">
-                    <img src="/assets/logoStyle.png" alt="Logo" style="width: 150px;" />
+                  <div class="text-center mb-4">
+                    <img src="/assets/logoStyle.png" alt="Logo" class="logo-img" />
+                    <h5 class="fw-bold mt-3 text-uppercase" style="letter-spacing: 2px; color: #C5A059;">
+                      Crie sua conta
+                    </h5>
                   </div>
 
-                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #C5A059;">Crie sua conta</h5>
+                  <% if (typeof messages !== 'undefined' && messages && messages.error) { %>
+                    <div class="alert alert-danger py-2 small"><%= messages.error %></div>
+                  <% } %>
 
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="email">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" required />
+                  <div class="form-outline mb-3">
+                    <label class="form-label mb-1" for="email">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-input" placeholder="seu@email.com" required />
+                  </div>
+
+                  <div class="form-outline mb-3">
+                    <label class="form-label mb-1 d-block" for="telefone">WhatsApp / Telefone</label>
+                    <input type="tel" id="telefone" name="telefone_view" class="form-control form-control-lg custom-input" required />
                   </div>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="telefone">Número de telefone</label>
-                    <div class="row g-2">
-                      <div class="col-4">
-                          <select id="country" name="country" class="form-select form-select-lg bg-dark text-white" style="border-color: #444;" required>
-                            <option value="+55" title="Brasil">🇧🇷 +55</option>
-                            <option value="+1" title="EUA/Canadá">🇺🇸 +1</option>
-                            <option value="+44" title="Reino Unido">🇬🇧 +44</option>
-                            <option value="+351" title="Portugal">🇵🇹 +351</option>
-                            <option value="+34" title="Espanha">🇪🇸 +34</option>
-                            <option value="+49" title="Alemanha">🇩🇪 +49</option>
-                            <option value="+33" title="França">🇫🇷 +33</option>
-                            <option value="+61" title="Austrália">🇦🇺 +61</option>
-                            <option value="" title="Outro">🏳️ Outro</option>
-                          </select>
-                      </div>
-                      <div class="col-8">
-                        <input type="tel" id="telefone" name="telefone" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" placeholder="(xx) xxxxx-xxxx" required />
-                      </div>
+                    <label class="form-label mb-1" for="password">Senha</label>
+                    <input type="password" id="password" name="password" class="form-control form-control-lg custom-input" placeholder="••••••••" required />
+                    <div class="form-text text-muted small">Mínimo de 6 caracteres.</div>
+                  </div>
+
+                  <button class="btn btn-gold btn-lg w-100 mb-4" type="submit">
+                    CADASTRAR AGORA
+                  </button>
+
+                  <div class="text-center">
+                    <p class="mb-2" style="color: #eee;">
+                      Já possui uma conta? <a href="/login" class="link-gold">Faça login</a>
+                    </p>
+                    <div class="footer-links">
+                      <a href="#!" class="small text-muted me-3">Termos</a>
+                      <a href="#!" class="small text-muted">Privacidade</a>
                     </div>
-                  </div>
-
-                  <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Senha</label>
-                    <input type="password" id="password" name="password" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" required />
-                  </div>
-
-                  <div class="pt-1 mb-4">
-                    <button class="btn btn-lg btn-block" type="submit" 
-                      style="background-color: #C5A059; color: black; font-weight: bold; width: 100%;">
-                      CADASTRAR
-                    </button>
-                  </div>
-
-                  <a class="small" href="#!" style="color: #aaa; text-decoration: none;">Esqueceu sua senha?</a>
-                  
-                  <p class="mb-5 pb-lg-2 mt-2" style="color: #eee;">
-                    Já possui uma conta? <a href="/login" style="color: #C5A059; font-weight: bold; text-decoration: none;">Faça login</a>
-                  </p>
-                  
-                  <div class="footer-links">
-                    <a href="#!" class="small text-muted me-3">Termos de uso</a>
-                    <a href="#!" class="small text-muted">Privacidade</a>
                   </div>
                 </form>
 
@@ -82,15 +71,124 @@
   </div>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const phoneInputField = document.querySelector('#telefone');
+    const form = document.querySelector('#registerForm');
+    const fullPhoneField = document.querySelector('#full_phone');
+
+    if (!phoneInputField || !form || !fullPhoneField) return;
+
+    // Guard: ensure the plugin is loaded
+    if (typeof window.intlTelInput !== 'function') {
+      console.warn('intlTelInput library not loaded. Phone field will work as plain input.');
+      return;
+    }
+
+    const phoneInput = window.intlTelInput(phoneInputField, {
+      initialCountry: 'br',
+      preferredCountries: ['br', 'pt', 'us'],
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+    });
+
+    form.addEventListener('submit', function (e) {
+      try {
+        // Validação básica de telefone antes de enviar
+        if (!phoneInput.isValidNumber()) {
+          e.preventDefault();
+          alert('Por favor, insira um número de telefone válido.');
+          phoneInputField.focus();
+          return;
+        }
+
+        // Preenche o campo oculto com o número em formato internacional
+        fullPhoneField.value = phoneInput.getNumber();
+      } catch (err) {
+        // Se o plugin falhar por algum motivo, não bloqueie o envio
+        console.error('Erro ao validar telefone:', err);
+      }
+    });
+  });
+</script>
+
 <style>
-  body { background-color: #0a0a0a !important; }
-  .form-control:focus {
-    background-color: #222 !important;
-    color: white !important;
-    border-color: #C5A059 !important;
-    box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.25) !important;
+  :root {
+    --gold: #C5A059;
+    --dark-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --input-bg: #222;
   }
-  .text-muted { color: #666 !important; text-decoration: none; }
+
+  body { background-color: var(--dark-bg); font-family: 'Inter', sans-serif; }
+
+  .register-section { min-height: 100vh; display: flex; align-items: center; }
+
+  .main-card {
+    border-radius: 1rem; 
+    background-color: var(--card-bg); 
+    border: 1px solid var(--gold);
+    overflow: hidden;
+  }
+
+  .side-img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    opacity: 0.7;
+    transition: 0.5s;
+  }
+
+  .side-img:hover { opacity: 0.9; }
+
+  .logo-img { width: 140px; filter: drop-shadow(0 0 5px rgba(197, 160, 89, 0.3)); }
+
+  .custom-input {
+    background-color: var(--input-bg) !important;
+    color: white !important;
+    border: 1px solid #444 !important;
+    font-size: 1rem;
+  }
+
+  .custom-input:focus {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.15) !important;
+  }
+
+  /* Make placeholder text lighter / more readable (match login) */
+  .custom-input::placeholder { color: #d6d6d6 !important; opacity: 1; }
+  .custom-input:-ms-input-placeholder { color: #d6d6d6; }
+  .custom-input::-ms-input-placeholder { color: #d6d6d6; }
+
+  .btn-gold {
+    background-color: var(--gold);
+    color: black;
+    font-weight: 800;
+    transition: 0.3s;
+    border: none;
+  }
+
+  .btn-gold:hover {
+    background-color: #d4b477;
+    transform: translateY(-2px);
+  }
+
+  .link-gold { color: var(--gold); font-weight: bold; text-decoration: none; }
+  .link-gold:hover { text-decoration: underline; color: #fff; }
+
+  /* Ajuste para o plugin de bandeiras ocupar a largura toda */
+  .iti { width: 100%; }
+  
+  /* Footer links (Termos / Privacidade) color — improved contrast */
+  .footer-links a {
+    color: #d6d6d6 !important;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .footer-links a:hover {
+    color: var(--gold) !important;
+    text-decoration: underline;
+  }
 </style>
 
 <%- include('../includes/footer') %>

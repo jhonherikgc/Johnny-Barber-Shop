@@ -1,5 +1,6 @@
 exports.loginPage = (req, res) => {
-  res.render('login', {
+  // login.ejs is located under src/views/auth/, render with the subpath
+  res.render('auth/login', {
     titulo: 'Login - Sistema de Agendamento'
   });
   return;

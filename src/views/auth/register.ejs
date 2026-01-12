@@ -1,0 +1,96 @@
+<%- include('../includes/head') %>
+
+<section style="background-color: #0a0a0a; min-height: 100vh; display: flex; align-items: center; padding: 40px 0;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem; background-color: #1a1a1a; border: 1px solid #C5A059;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="/assets/loginPage.png"
+                alt="login form" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; border-radius: 1rem 0 0 1rem; opacity: 0.8;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-white">
+                
+                <form action="/register" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <img src="/assets/logoStyle.png" alt="Logo" style="width: 150px;" />
+                  </div>
+
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #C5A059;">Crie sua conta</h5>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="email">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" required />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="telefone">Número de telefone</label>
+                    <div class="row g-2">
+                      <div class="col-4">
+                          <select id="country" name="country" class="form-select form-select-lg bg-dark text-white" style="border-color: #444;" required>
+                            <option value="+55" title="Brasil">🇧🇷 +55</option>
+                            <option value="+1" title="EUA/Canadá">🇺🇸 +1</option>
+                            <option value="+44" title="Reino Unido">🇬🇧 +44</option>
+                            <option value="+351" title="Portugal">🇵🇹 +351</option>
+                            <option value="+34" title="Espanha">🇪🇸 +34</option>
+                            <option value="+49" title="Alemanha">🇩🇪 +49</option>
+                            <option value="+33" title="França">🇫🇷 +33</option>
+                            <option value="+61" title="Austrália">🇦🇺 +61</option>
+                            <option value="" title="Outro">🏳️ Outro</option>
+                          </select>
+                      </div>
+                      <div class="col-8">
+                        <input type="tel" id="telefone" name="telefone" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" placeholder="(xx) xxxxx-xxxx" required />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="password">Senha</label>
+                    <input type="password" id="password" name="password" class="form-control form-control-lg bg-dark text-white" style="border-color: #444;" required />
+                  </div>
+
+                  <div class="pt-1 mb-4">
+                    <button class="btn btn-lg btn-block" type="submit" 
+                      style="background-color: #C5A059; color: black; font-weight: bold; width: 100%;">
+                      CADASTRAR
+                    </button>
+                  </div>
+
+                  <a class="small" href="#!" style="color: #aaa; text-decoration: none;">Esqueceu sua senha?</a>
+                  
+                  <p class="mb-5 pb-lg-2 mt-2" style="color: #eee;">
+                    Já possui uma conta? <a href="/login" style="color: #C5A059; font-weight: bold; text-decoration: none;">Faça login</a>
+                  </p>
+                  
+                  <div class="footer-links">
+                    <a href="#!" class="small text-muted me-3">Termos de uso</a>
+                    <a href="#!" class="small text-muted">Privacidade</a>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  body { background-color: #0a0a0a !important; }
+  .form-control:focus {
+    background-color: #222 !important;
+    color: white !important;
+    border-color: #C5A059 !important;
+    box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.25) !important;
+  }
+  .text-muted { color: #666 !important; text-decoration: none; }
+</style>
+
+<%- include('../includes/footer') %>

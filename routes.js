@@ -5,9 +5,13 @@ const contatoController = require('./src/controllers/contatoController');
 const errorController = require('./src/controllers/errorController');
 const loginController = require('./src/controllers/loginController');
 const agendamentoController = require('./src/controllers/agendamentoController');
+const registerController = require('./src/controllers/registerController')
 
 // Rota de login
 route.get('/login', loginController.loginPage);
+
+// Rota de register
+route.get('/register', registerController.registerPage)
 
 // Rotas da home
 route.get('/', homeController.paginaInicial);

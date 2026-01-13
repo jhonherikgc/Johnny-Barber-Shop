@@ -19,13 +19,11 @@ exports.registerPost = async (req, res) => {
     if (erros.length > 0) {
       return res.render('auth/register', {
         titulo: 'Registro - Johnny Barber Shop',
-        // Juntamos os erros em uma string para o seu messages.error do EJS
         messages: { error: erros.join(' | ') } 
       });
     }
 
     // 3. Tenta criar o novo usuário no MongoDB
-    // Note que usamos 'full_phone' pois é o nome do seu input hidden no HTML
     const novoUsuario = new Usuario({
       email: req.body.email,
       telefone: req.body.full_phone, 

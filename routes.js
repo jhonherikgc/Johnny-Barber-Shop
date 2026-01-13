@@ -9,9 +9,11 @@ const registerController = require('./src/controllers/registerController')
 
 // Rota de login
 route.get('/login', loginController.loginPage);
+route.post('/login', loginController.loginPost)
 
 // Rota de register
 route.get('/register', registerController.registerPage)
+route.post('/register', registerController.registerPost)
 
 // Rotas da home
 route.get('/', homeController.paginaInicial);

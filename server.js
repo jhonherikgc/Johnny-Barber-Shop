@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 // Conexão com o Banco de Dados
 mongoose.connect(process.env.CONNECTIONSTRING)
   .then(() => {
-    console.log('Conectado à base de dados'); // Log para saber que o banco subiu
+    console.log('Conectado à base de dados');
     app.emit('pronto');
   })
   .catch(e => console.log('Erro de conexão:', e));
@@ -22,7 +22,7 @@ const csrf = require('csurf');
 const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
 
 // Configurações Globais
-app.use(helmet({ contentSecurityPolicy: false })); // Permite carregar assets em localhost
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'public')));

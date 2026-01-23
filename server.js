@@ -1,17 +1,10 @@
 require('dotenv').config();
 
+// --- INICIALIZAÇÃO DO SERVIDOR ---
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-
-// Conexão com o Banco de Dados
-mongoose.connect(process.env.CONNECTIONSTRING)
-  .then(() => {
-    console.log('Conectado à base de dados');
-    app.emit('pronto');
-  })
-  .catch(e => console.log('Erro de conexão:', e));
-
+const chalk = require('chalk');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -20,6 +13,23 @@ const path = require('path');
 const helmet = require('helmet');
 const csrf = require('csurf');
 const { middlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
+
+// Conexão com o Banco de Dados
+mongoose.connect(process.env.CONNECTIONSTRING)
+  .then(() => {
+    // Verificação de segurança: checa se chalk existe antes de usar
+    const msg = chalk.cyan ? chalk.cyan.bold('🔹 MongoDB:') + chalk.green(' Conectado!') : '🔹 MongoDB: Conectado!';
+    console.log(msg);
+    app.emit('pronto');
+  })
+  .catch(e => {
+    // Se o chalk falhar aqui, usamos o console.log comum para ver o erro real do banco
+    if (chalk.red) {
+      console.log(chalk.red.bold('❌ Erro de conexão:'), e);
+    } else {
+      console.log('❌ Erro de conexão:', e);
+    }
+  });
 
 // Configurações Globais
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -47,15 +57,27 @@ app.set('view engine', 'ejs');
 
 // Segurança CSRF e Middlewares
 app.use(csrf());
-app.use(middlewareGlobal); // injeta variáveis em res.locals
-app.use(checkCsrfError);    // checa erros de token
-app.use(csrfMiddleware);    // envia o token para o front-end
+app.use(middlewareGlobal); 
+app.use(checkCsrfError);    
+app.use(csrfMiddleware);    
 app.use(routes);
 
-// Escuta do Servidor
+// --- INICIALIZAÇÃO DO SERVIDOR ---
 app.on('pronto', () => {
   app.listen(3000, () => {
-    console.log('Acessar http://localhost:3000');
-    console.log('Servidor executando na porta 3000');
+    console.log(chalk.yellow.bold('\n--- 🗺️  MAPEAMENTO DE ROTAS ---'));
+    
+    const mapeamento = [
+      { Rota: '/', Controller: 'HomeController', Status: '✔️ ' },
+      { Rota: '/login', Controller: 'LoginController', Status: '✔️ ' },
+      { Rota: '/register', Controller: 'RegisterController', Status: '✔️ ' },
+      { Rota: '/agendamento', Controller: 'AgendamentoController', Status: '✔️ ' },
+      { Rota: '/contato', Controller: 'ContatoController', Status: '✔️ ' }
+    ];
+
+    console.table(mapeamento);
+
+    console.log(chalk.green.bold('🚀 Johnny Barber Online: ') + chalk.blue.underline('http://localhost:3000'));
+    console.log(chalk.gray('⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n'));
   });
 });

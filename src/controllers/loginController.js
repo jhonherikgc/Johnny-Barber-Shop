@@ -1,33 +1,31 @@
 const Usuario = require('../models/usersModels');
-const validator = require('../validation/validation');
 const bcrypt = require('bcrypt');
 
-const loginPage = (req, res) => {
+exports.loginPage = (req, res) => {
   res.render('auth/login', {
     titulo: 'Login - Johnny Barber Shop',
     erros: []
   });
 };
 
-const loginPost = async (req, res) => {
+exports.loginPost = async (req, res) => {
   try {
-    // Pegamos exatamente o que vem do formulário
     const { email, senha } = req.body;
+    const erros = [];
+    let usuario = null; // Definimos como null aqui para estar disponível em toda a função
 
-    // LOG PARA TESTE: Verifique no seu terminal se a senha aparece
-    console.log(`Tentativa de login: ${email} | Senha recebida: ${senha ? 'SIM' : 'NÃO'}`);
-
-    // 1. Validação (Passando os dados para o seu validador)
-    let erros = validator.validarLogin(req.body);
+    // 1. Validação Manual
+    if (!email) erros.push('O e-mail é obrigatório.');
+    if (!senha) erros.push('A senha é obrigatória.');
 
     if (erros.length === 0) {
-      // 2. Busca o usuário pelo e-mail
-      const usuario = await Usuario.findOne({ email: email });
+      // 2. Busca o usuário
+      usuario = await Usuario.findOne({ email: email });
 
       if (!usuario) {
         erros.push('E-mail ou senha incorretos.');
       } else {
-        // 3. Comparação do Hash (usuario.senha vem do seu Schema do MongoDB)
+        // 3. Compara a senha
         const senhaBate = await bcrypt.compare(senha, usuario.senha);
         
         if (!senhaBate) {
@@ -36,7 +34,7 @@ const loginPost = async (req, res) => {
       }
     }
 
-    // Se houver erros, volta para a página com as mensagens
+    // 4. Se houver erros (de validação ou de login)
     if (erros.length > 0) {
       return res.render('auth/login', { 
         titulo: 'Login - Johnny Barber Shop', 
@@ -44,14 +42,22 @@ const loginPost = async (req, res) => {
       });
     }
 
-    // Sucesso - Login realizado
-    console.log('Login realizado com sucesso!');
-    res.redirect('/'); 
+    // 5. LOGIN COM SUCESSO
+    // Agora 'usuario' está definido e acessível aqui
+    req.session.user = {
+      _id: usuario._id,
+      email: usuario.email
+    };
+
+    console.log('✅ Login realizado com sucesso:', email);
+    
+    // Salva a sessão antes de redirecionar (boa prática)
+    req.session.save(() => {
+      res.redirect('/'); 
+    });
 
   } catch (e) {
     console.error('ERRO NO LOGIN:', e);
     res.status(500).render('404');
   }
 };
-
-module.exports = { loginPage, loginPost };

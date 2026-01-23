@@ -33,7 +33,7 @@
 
                   <div class="form-outline mb-3">
                     <label class="form-label mb-1" for="email">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-input" placeholder="seu@email.com" required />
+                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-input" required />
                   </div>
 
                   <div class="form-outline mb-3">
@@ -43,8 +43,8 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label mb-1" for="password">Senha</label>
-                    <input type="password" id="password" name="password" class="form-control form-control-lg custom-input" placeholder="••••••••" required />
-                    <div class="form-text text-muted small">Mínimo de 6 caracteres.</div>
+                    <input type="password" id="password" name="password" class="form-control form-control-lg custom-input" required />
+                    <div class="form-text small" style="color: #eee;">Mínimo de 6 caracteres.</div>
                   </div>
 
                   <button class="btn btn-gold btn-lg w-100 mb-4" type="submit">
@@ -80,32 +80,36 @@
 
     if (!phoneInputField || !form || !fullPhoneField) return;
 
-    // Guard: ensure the plugin is loaded
-    if (typeof window.intlTelInput !== 'function') {
-      console.warn('intlTelInput library not loaded. Phone field will work as plain input.');
-      return;
-    }
-
+    // Inicialização do plugin com configurações de visibilidade
     const phoneInput = window.intlTelInput(phoneInputField, {
       initialCountry: 'br',
       preferredCountries: ['br', 'pt', 'us'],
+      allowDropdown: true,
+      separateDialCode: true, // Isso coloca a bandeira e o código (+55) fora do input, facilitando a visualização
       utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
     });
 
     form.addEventListener('submit', function (e) {
+      const existingError = document.querySelector('.temp-error');
+      if (existingError) existingError.remove();
+
       try {
-        // Validação básica de telefone antes de enviar
         if (!phoneInput.isValidNumber()) {
-          e.preventDefault();
-          alert('Por favor, insira um número de telefone válido.');
+          e.preventDefault(); 
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'temp-error small mt-1';
+          errorDiv.style.color = '#eee';
+          errorDiv.innerText = 'Por favor, insira um número de telefone válido.';
+          
+          phoneInputField.parentNode.insertAdjacentElement('afterend', errorDiv);
           phoneInputField.focus();
           return;
         }
 
-        // Preenche o campo oculto com o número em formato internacional
+        // Garante que o número completo com DDI (+55...) vá para o banco
         fullPhoneField.value = phoneInput.getNumber();
+
       } catch (err) {
-        // Se o plugin falhar por algum motivo, não bloqueie o envio
         console.error('Erro ao validar telefone:', err);
       }
     });
@@ -155,10 +159,9 @@
     box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.15) !important;
   }
 
-  /* Make placeholder text lighter / more readable (match login) */
-  .custom-input::placeholder { color: #d6d6d6 !important; opacity: 1; }
-  .custom-input:-ms-input-placeholder { color: #d6d6d6; }
-  .custom-input::-ms-input-placeholder { color: #d6d6d6; }
+  .custom-input::placeholder { color: #d6d6d63b !important; opacity: 1; }
+  .custom-input:-ms-input-placeholder { color: #d6d6d63b; }
+  .custom-input::-ms-input-placeholder { color: #d6d6d63b; }
 
   .btn-gold {
     background-color: var(--gold);
@@ -189,6 +192,32 @@
     color: var(--gold) !important;
     text-decoration: underline;
   }
+
+  /* Bandeiras no campo de telefone */
+.iti {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 1rem;
+}
+
+.iti__country-list {
+    background-color: #222 !important;
+    color: #fff !important;
+    border: 1px solid var(--gold);
+}
+
+.iti__country:hover {
+    background-color: #444 !important;
+}
+
+.iti__selected-dial-code {
+    color: #eee !important;
+    margin-left: 5px;
+}
+
+.iti__flag {
+    background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/img/flags.png") !important;
+}
 </style>
 
 <%- include('../includes/footer') %>

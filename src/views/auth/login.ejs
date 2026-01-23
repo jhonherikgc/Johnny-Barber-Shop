@@ -21,18 +21,20 @@
                     <h5 class="fw-bold mt-3 text-uppercase" style="letter-spacing: 2px; color: #C5A059;">Acesse sua conta</h5>
                   </div>
 
-                  <% if (typeof messages !== 'undefined' && messages && messages.error) { %>
-                    <div class="alert alert-danger py-2 small"><%= messages.error %></div>
+                  <% if (typeof erros !== 'undefined' && erros.length > 0) { %>
+                    <% erros.forEach(erro => { %>
+                      <div class="alert alert-danger py-2 small"><%= erro %></div>
+                    <% }) %>
                   <% } %>
 
                   <div class="form-outline mb-3">
-                    <label class="form-label mb-1" for="email">E-mail ou Usuário</label>
-                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-input" style="color: #aaa" placeholder="seu@email.com" required />
+                    <label class="form-label mb-1" for="email">E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control form-control-lg custom-input" style="color: #aaa" required />
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label mb-1" for="password">Senha</label>
-                    <input type="password" id="password" name="password" class="form-control form-control-lg custom-input" placeholder="••••••••" required />
+                    <input type="password" id="password" name="senha" class="form-control form-control-lg custom-input" required />
                   </div>
 
                   <div class="d-flex justify-content-between align-items-center mb-3">
@@ -98,9 +100,6 @@
   }
 
   /* Make placeholder text lighter / more readable */
-  .custom-input::placeholder { color: #d6d6d63b !important; opacity: 1; }
-  .custom-input:-ms-input-placeholder { color: #d6d6d63b; }
-  .custom-input::-ms-input-placeholder { color: #d6d6d63b; }
 
   .custom-input:focus {
     border-color: var(--gold) !important;

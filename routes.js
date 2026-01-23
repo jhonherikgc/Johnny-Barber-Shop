@@ -1,30 +1,35 @@
 const express = require('express');
 const route = express.Router();
+
+// Importação dos Controllers
 const homeController = require('./src/controllers/homeController');
 const contatoController = require('./src/controllers/contatoController');
 const errorController = require('./src/controllers/errorController');
 const loginController = require('./src/controllers/loginController');
 const agendamentoController = require('./src/controllers/agendamentoController');
-const registerController = require('./src/controllers/registerController')
+const registerController = require('./src/controllers/registerController');
 
-// Rota de login
+// --- RADAR DE DEBUG (Aparece no seu terminal) ---
+console.log('--- Verificando Controllers ---');
+console.log('Home:', typeof homeController.paginaInicial);
+console.log('Login:', typeof loginController.loginPage);
+console.log('Objeto Login:', loginController);
+console.log('Register:', typeof registerController.registerPage);
+console.log('Agendamento:', typeof agendamentoController.agendarHorario);
+console.log('-------------------------------');
+
+// Rota de Login
 route.get('/login', loginController.loginPage);
-route.post('/login', loginController.loginPost)
+route.post('/login', loginController.loginPost);
 
-// Rota de register
-route.get('/register', registerController.registerPage)
-route.post('/register', registerController.registerPost)
+// Rota de Registro
+route.get('/register', registerController.registerPage);
+route.post('/register', registerController.registerPost);
 
-// Rotas da home
+// Outras Rotas
 route.get('/', homeController.paginaInicial);
-
-// Rotas de contato
 route.get('/contato', contatoController.paginaInicial);
-
-// Rotas de agendamento
-route.get('/agendamento', agendamentoController.agendarHorario)
-
-// Rota de erro 404
+route.get('/agendamento', agendamentoController.agendarHorario);
 route.get('/404', errorController.paginaErro);
 
 module.exports = route;

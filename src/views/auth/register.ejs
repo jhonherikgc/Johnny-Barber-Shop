@@ -27,8 +27,10 @@
                     </h5>
                   </div>
 
-                  <% if (typeof messages !== 'undefined' && messages && messages.error) { %>
-                    <div class="alert alert-danger py-2 small"><%= messages.error %></div>
+                  <% if (typeof erros !== 'undefined' && erros.length > 0) { %>
+                    <% erros.forEach(erro => { %>
+                      <div class="alert alert-danger py-2 small"><%= erro %></div>
+                    <% }) %>
                   <% } %>
 
                   <div class="form-outline mb-3">

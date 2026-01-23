@@ -1,4 +1,4 @@
-const validator = require('../validation/validation'); // Importe seu arquivo de validação
+const validator = require('../validation/validation'); 
 
 // 1. Rota para mostrar a página (GET)
 exports.loginPage = (req, res) => {
